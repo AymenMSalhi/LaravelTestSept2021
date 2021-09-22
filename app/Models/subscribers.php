@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class subscribers extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'fname', 'lname', 'email', 'website_ident'
+    ];
 }

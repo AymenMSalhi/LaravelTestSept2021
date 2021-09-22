@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => 'api',
+], function ($router) {
+
+    //Route::get('', 'Controller@');
+    Route::post('add-post', 'App\Http\Controllers\PostController@addPost');
+    Route::post('subscribe', 'App\Http\Controllers\SubscriberController@SubscribeUser');
 });
