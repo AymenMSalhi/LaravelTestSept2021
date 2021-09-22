@@ -18,9 +18,19 @@ class PostController extends Controller
 
         $subscribers = DB::table('subscribers')->where('website_ident', '=', $website_ident)->get();
 
-        foreach ($subscribers as $key => $user) {
-            Mail::to($user->email)->send(new NotifMail($title, $description));
+        $duplicated = posts::where([
+            ['title', '=', $title],
+            ['description', '=', $description],
+            ['website_ident', '=', $website_ident]
+        ])->first();
+
+        if(empty($duplicated)) {
+            foreach ($subscribers as $key => $user) {
+                Mail::to($user->email)->send(new NotifMail($title, $description));
+            }
         }
+
+        
 
         posts::create($request->all());
 
